@@ -15,7 +15,14 @@ public class PlayerController : MonoBehaviour
     public float sprintMultiplier = 2.5f;
     public float jumpheight = 5.0f;
     public float GrounddetectDistance = 1.0f;
-    public bool Sprintmode = false;
+    public bool sprintMode = false;
+
+    public float TimeSprint;
+
+    [Header("Sprint Accelaration")]
+    public float STARTacceltime = 10;
+    public float ENDacceltime = 15;
+
 
     [Header("User Settings")]
     public bool sprintToggleOption = false;
@@ -27,9 +34,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         myRB = GetComponent<Rigidbody>();
 
         playerCam = transform.GetChild(0).GetComponent<Camera>();
+        
 
         camRotation = Vector2.zero;
         Cursor.visible= false;
@@ -48,41 +57,55 @@ public class PlayerController : MonoBehaviour
 
 
 
+        
+        if(sprintMode)
+        {
+            speed = Mathf.Lerp(STARTacceltime, ENDacceltime, TimeSprint / 5);
+            TimeSprint += Time.deltaTime;
+        }
+        else
+        {
+            TimeSprint = 0;
+            speed = 10;
+        }
 
         Vector3 temp = myRB.velocity;
 
-        if(!sprintToggleOption)
+        float verticalMove = Input.GetAxisRaw("Vertical");
+        float horizontalMove = Input.GetAxisRaw("Horizontal");
+
+        //Sprint Toggle Option start
+        if (!sprintToggleOption)
         {
             if (Input.GetKey(KeyCode.LeftShift))
-                Sprintmode = true;
-           
+                sprintMode = true;
+
             if (Input.GetKeyUp(KeyCode.LeftShift))
-                Sprintmode = false;
+                sprintMode = false;
         }
-       
-       
-        if (!Sprintmode)
-            temp.x = Input.GetAxisRaw("Vertical") * speed;
-        
-        if (Sprintmode)
-            temp.x = Input.GetAxisRaw("Vertical") * speed * sprintMultiplier;
-        
+
         if (sprintToggleOption)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxisRaw("Vertical") > 0)
-                Sprintmode= true;  
-            if (Input.GetKeyUp(KeyCode.LeftShift) && Input.GetAxisRaw("Vertical") <= 0)
-                    Sprintmode = false;
+            if (Input.GetKey(KeyCode.LeftShift) && verticalMove > 0)
+                sprintMode = true;
+
+            if (verticalMove <= 0)
+                sprintMode = false;
         }
-       
+        //Sprint Toggle Option End
 
-        temp.z= Input.GetAxisRaw("Horizontal") * speed;
+        if (!sprintMode)
+            temp.x = verticalMove * speed;
 
-       
+        if (sprintMode)
+            temp.x = verticalMove * speed * sprintMultiplier;
+
+        temp.z = horizontalMove * speed;
+
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics.Raycast(transform.position, -transform.up, GrounddetectDistance))
             temp.y = jumpheight;
-        
+            
         myRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
     
         
