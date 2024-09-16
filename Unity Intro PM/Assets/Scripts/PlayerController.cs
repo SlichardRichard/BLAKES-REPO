@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,15 @@ public class PlayerController : MonoBehaviour
     Camera playerCam;
 
     Vector2 camRotation;
+    public Transform Weaponslot;
+
+    [Header("Player Stats")]
+    public int MAXHealth = 5;
+    public int Health = 5;
+    public int HealthRestore = 1;
+    
+    [Header("weapon Stats")]
+    public bool canFire = true;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -110,4 +120,30 @@ public class PlayerController : MonoBehaviour
     
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((Health < MAXHealth) && collision.gameObject.tag == "HealthPickup")
+        {
+            Health += HealthRestore;
+
+            if(Health > MAXHealth)
+                Health= MAXHealth;
+
+
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "WeaponTag")
+            collision.gameObject.transform.SetParent(Weaponslot);
+    }
+
+
+
+    IEnumerator cooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canFire = true;
+    }
+
 }
