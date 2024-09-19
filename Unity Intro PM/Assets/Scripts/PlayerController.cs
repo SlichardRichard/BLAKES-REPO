@@ -11,13 +11,16 @@ public class PlayerController : MonoBehaviour
 
     Vector2 camRotation;
     public Transform Weaponslot;
+    
 
     [Header("Player Stats")]
     public int maxHealth = 5;
     public int Health = 5;
     public int HealthRestore = 1;
-    
+
     [Header("weapon Stats")]
+    public GameObject shot;
+    public float shotspeed = 0f;
     public bool canFire = true;
     public int weaponID = 0;
     public float fireRate = 0;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public float ReloadAmount = 0;
     public int Firemode = 0;
     public int FiremodeCount = 0;
+    public float bulletlifespan = 0;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -71,9 +75,19 @@ public class PlayerController : MonoBehaviour
 
         playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
-
-        if (Input.GetMouseButtonDown(0) && canFire)
+        
+        if (Input.GetMouseButtonDown(0) && canFire && weaponID <= 0)
         {
+            
+
+        }
+        
+        if (Input.GetMouseButtonDown(0) && canFire && weaponID >= 0) 
+        {
+            GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
+            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
+            Destroy(s,bulletlifespan);
+
             canFire= false;
             StartCoroutine("cooldown");
         }
@@ -82,6 +96,7 @@ public class PlayerController : MonoBehaviour
             cooldown();
         }
         
+        // Sprinting
         if(sprintMode)
         {
             speed = Mathf.Lerp(STARTacceltime, ENDacceltime, TimeSprint / 5);
@@ -95,6 +110,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 temp = myRB.velocity;
 
+        //
         float verticalMove = Input.GetAxisRaw("Vertical");
         float horizontalMove = Input.GetAxisRaw("Horizontal");
 
@@ -135,20 +151,25 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+   
+    private void OnTriggerEnter(Collider other)
     {
-        if ((Health < maxHealth) && collision.gameObject.tag == "HealthPickup")
         {
-            Health += HealthRestore;
+            if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
+            {
+                Health += HealthRestore;
 
-            if(Health > maxHealth)
-                Health= maxHealth;
+                if (Health > maxHealth)
+                    Health = maxHealth;
 
 
-            Destroy(collision.gameObject);
+                Destroy(other.gameObject);
+            }
+
+
         }
-        
-        if ((currentAmmo < maxAmmo) && collision.gameObject.tag == "ammoPickup")
+
+        if ((currentAmmo < maxAmmo) && other.gameObject.tag == "ammoPickup")
         {
             currentAmmo += ReloadAmount;
 
@@ -156,11 +177,9 @@ public class PlayerController : MonoBehaviour
                 currentAmmo = maxAmmo;
 
 
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
+
         if (other.gameObject.tag == "WeaponTag")
         {
 
@@ -182,9 +201,11 @@ public class PlayerController : MonoBehaviour
                         fireRate = 0.5f;
                         maxAmmo = 60;
                         currentAmmo = 6;
-                        ReloadAmount = 0;
+                        ReloadAmount = 20;
                         Firemode= 0;
-                        FiremodeCount= 0;
+                        FiremodeCount = 0;
+                        bulletlifespan = 5;
+                        shotspeed = 1000f;
                     break;
             
             }        
@@ -192,12 +213,14 @@ public class PlayerController : MonoBehaviour
             
 
     }
-    
+  
 
     IEnumerator cooldown()
     {
         yield return new WaitForSeconds(fireRate);
         canFire = true;
     }
+
+
 
 }
