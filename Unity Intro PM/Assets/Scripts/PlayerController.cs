@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("weapon Stats")]
     public GameObject shot;
+    public GameObject fists;
     public float shotspeed = 0f;
     public bool canFire = true;
     public int weaponID = 0;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public int Firemode = 0;
     public int FiremodeCount = 0;
     public float bulletlifespan = 0;
+    public float fistslifespan = 0;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -78,10 +80,11 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) && canFire && weaponID <= 0)
         {
-            
+           fists.SetActive(true);
+            StartCoroutine(cooldown(1f));
 
         }
-        
+        //semiauto fire
         if (Input.GetMouseButtonDown(0) && canFire && weaponID >= 0) 
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
@@ -89,11 +92,22 @@ public class PlayerController : MonoBehaviour
             Destroy(s,bulletlifespan);
 
             canFire= false;
-            StartCoroutine("cooldown");
+            StartCoroutine(cooldown(.5f));
         }
+        //autofire
+        if (Input.GetMouseButton(0) && canFire && weaponID >= 2)
+        {
+            GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
+            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
+            Destroy(s, bulletlifespan);
+
+            canFire = false;
+            StartCoroutine(cooldown(.1f));
+        }
+
         if (Input.GetKeyDown(KeyCode.R)) 
         {
-            cooldown();
+            StartCoroutine(cooldown(1f));
         }
         
         // Sprinting
@@ -194,10 +208,11 @@ public class PlayerController : MonoBehaviour
                 default:
                     weaponID = 0;
                     fireRate = 0.1f;
+                    fistslifespan = 0.3f;
                     break;
 
                 case "weapon1":
-                    weaponID = 1;
+                        weaponID = 1;
                         fireRate = 0.5f;
                         maxAmmo = 60;
                         currentAmmo = 6;
@@ -207,7 +222,18 @@ public class PlayerController : MonoBehaviour
                         bulletlifespan = 5;
                         shotspeed = 1000f;
                     break;
-            
+                
+                case "weapon2":
+                        weaponID = 2;
+                        fireRate = 0.001f;
+                        maxAmmo = 90;
+                        currentAmmo = 30;
+                        ReloadAmount = 10;
+                        Firemode = 0;
+                        FiremodeCount = 0;
+                        bulletlifespan = 5;
+                        shotspeed = 2000f;
+                   break;
             }        
         }
             
@@ -215,12 +241,13 @@ public class PlayerController : MonoBehaviour
     }
   
 
-    IEnumerator cooldown()
+    IEnumerator cooldown(float time)
     {
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(time);
         canFire = true;
+        fists.SetActive(false);    
     }
 
-
+    
 
 }
