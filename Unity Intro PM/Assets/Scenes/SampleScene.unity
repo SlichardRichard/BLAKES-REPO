@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 187081589}
   - component: {fileID: 187081588}
   - component: {fileID: 187081587}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,6 +465,7 @@ MonoBehaviour:
   FiremodeCount: 0
   bulletlifespan: 0
   fistslifespan: 0
+  bulletraylength: 1
   speed: 5
   sprintMultiplier: 2.5
   jumpheight: 5
@@ -522,7 +523,7 @@ GameObject:
   - component: {fileID: 589442741}
   - component: {fileID: 589442740}
   - component: {fileID: 589442739}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

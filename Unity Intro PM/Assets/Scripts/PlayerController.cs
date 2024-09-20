@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 5;
     public int Health = 5;
     public int HealthRestore = 1;
+    LayerMask layerMask;
 
     [Header("weapon Stats")]
     public GameObject shot;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public int FiremodeCount = 0;
     public float bulletlifespan = 0;
     public float fistslifespan = 0;
+    public float bulletraylength = 1f;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.layer = LayerMask.NameToLayer("Wall");
 
         myRB = GetComponent<Rigidbody>();
 
@@ -100,6 +104,7 @@ public class PlayerController : MonoBehaviour
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
             Destroy(s, bulletlifespan);
+            
 
             canFire = false;
             StartCoroutine(cooldown(.1f));
@@ -165,7 +170,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-   
+   //Pickups
     private void OnTriggerEnter(Collider other)
     {
         {
@@ -182,8 +187,9 @@ public class PlayerController : MonoBehaviour
 
 
         }
+  
 
-        if ((currentAmmo < maxAmmo) && other.gameObject.tag == "ammoPickup")
+        if ((currentAmmo < maxAmmo) && other.gameObject.tag == "ammoPickup" )
         {
             currentAmmo += ReloadAmount;
 
@@ -236,10 +242,10 @@ public class PlayerController : MonoBehaviour
                    break;
             }        
         }
-            
+        
+
 
     }
-  
 
     IEnumerator cooldown(float time)
     {
