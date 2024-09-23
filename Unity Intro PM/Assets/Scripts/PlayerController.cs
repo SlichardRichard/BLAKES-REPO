@@ -31,10 +31,10 @@ public class PlayerController : MonoBehaviour
     public float currentAmmo = 0;
     public float ReloadAmount = 0;
     public int Firemode = 0;
-    public int FiremodeCount = 0;
     public float bulletlifespan = 0;
     public float fistslifespan = 0;
     public float bulletraylength = 1f;
+
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         myRB = GetComponent<Rigidbody>();
 
         playerCam = transform.GetChild(0).GetComponent<Camera>();
-        
+
 
         camRotation = Vector2.zero;
         Cursor.visible= false;
@@ -89,17 +89,17 @@ public class PlayerController : MonoBehaviour
 
         }
         //semiauto fire
-        if (Input.GetMouseButtonDown(0) && canFire && weaponID >= 0) 
+        if (Input.GetMouseButtonDown(0) && canFire && Firemode >= 1) 
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
             Destroy(s,bulletlifespan);
-
+    
             canFire= false;
             StartCoroutine(cooldown(.5f));
         }
         //autofire
-        if (Input.GetMouseButton(0) && canFire && weaponID >= 2)
+        if (Input.GetMouseButton(0) && canFire && Firemode >= 2)
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
@@ -109,12 +109,16 @@ public class PlayerController : MonoBehaviour
             canFire = false;
             StartCoroutine(cooldown(.1f));
         }
+        //weaponequipcheck
+        
 
         if (Input.GetKeyDown(KeyCode.R)) 
         {
             StartCoroutine(cooldown(1f));
         }
         
+
+
         // Sprinting
         if(sprintMode)
         {
@@ -224,9 +228,9 @@ public class PlayerController : MonoBehaviour
                         currentAmmo = 6;
                         ReloadAmount = 20;
                         Firemode= 0;
-                        FiremodeCount = 0;
                         bulletlifespan = 5;
                         shotspeed = 1000f;
+                        Firemode = 1;
                     break;
                 
                 case "weapon2":
@@ -236,10 +240,10 @@ public class PlayerController : MonoBehaviour
                         currentAmmo = 30;
                         ReloadAmount = 10;
                         Firemode = 0;
-                        FiremodeCount = 0;
                         bulletlifespan = 5;
                         shotspeed = 2000f;
-                   break;
+                        Firemode = 2;
+                    break;
             }        
         }
         
