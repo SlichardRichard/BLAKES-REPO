@@ -7,6 +7,8 @@ TagManager:
   - HealthPickup
   - WeaponTag
   - shot
+  - basic enemy
+  - ammoPickup
   layers:
   - Default
   - TransparentFX

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public float bulletlifespan = 0;
     public float fistslifespan = 0;
     public float bulletraylength = 1f;
+   
+    
 
 
     [Header("Movement Settings")]
@@ -81,11 +83,11 @@ public class PlayerController : MonoBehaviour
 
         playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
-        
+        //fists
         if (Input.GetMouseButtonDown(0) && canFire && weaponID <= 0)
         {
            fists.SetActive(true);
-            StartCoroutine(cooldown(1f));
+            StartCoroutine("cooldownFire");
 
         }
         //semiauto fire
@@ -93,28 +95,31 @@ public class PlayerController : MonoBehaviour
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
+            currentAmmo--;
             Destroy(s,bulletlifespan);
     
             canFire= false;
-            StartCoroutine(cooldown(.5f));
+            StartCoroutine("cooldownFire");
+            
         }
         //autofire
         if (Input.GetMouseButton(0) && canFire && Firemode >= 2)
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
+            currentAmmo--;
             Destroy(s, bulletlifespan);
             
 
             canFire = false;
-            StartCoroutine(cooldown(.1f));
+            StartCoroutine("cooldownFire");
         }
         //weaponequipcheck
         
 
         if (Input.GetKeyDown(KeyCode.R)) 
         {
-            StartCoroutine(cooldown(1f));
+            reloadClip();
         }
         
 
@@ -235,7 +240,7 @@ public class PlayerController : MonoBehaviour
                 
                 case "weapon2":
                         weaponID = 2;
-                        fireRate = 0.001f;
+                        fireRate = 0.1f;
                         maxAmmo = 90;
                         currentAmmo = 30;
                         ReloadAmount = 10;
@@ -250,10 +255,37 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
-    IEnumerator cooldown(float time)
+    public void reloadClip()
     {
-        yield return new WaitForSeconds(time);
+
+        
+        if (currentAmmo >= maxAmmo)
+            return;
+
+        else
+        {
+            float reloadCount = maxAmmo - currentAmmo;
+
+            if (currentAmmo < reloadCount)
+            {
+                currentAmmo += currentAmmo;
+                currentAmmo = 0;
+                return;
+            }
+
+            else
+            {
+                currentAmmo += reloadCount;
+                currentAmmo -= reloadCount;
+                return;
+            }
+        }
+
+    }
+
+    IEnumerator cooldownFire()
+    {
+        yield return new WaitForSeconds(fireRate);
         canFire = true;
         fists.SetActive(false);    
     }
