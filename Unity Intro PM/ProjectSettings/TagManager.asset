@@ -9,6 +9,7 @@ TagManager:
   - shot
   - basic enemy
   - ammoPickup
+  - Fists
   layers:
   - Default
   - TransparentFX

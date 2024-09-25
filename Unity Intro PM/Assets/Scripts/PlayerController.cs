@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
         }
         //semiauto fire
-        if (Input.GetMouseButtonDown(0) && canFire && Firemode >= 1) 
+        if (Input.GetMouseButtonDown(0) && canFire && Firemode >= 1 && currentAmmo > 0) 
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             
         }
         //autofire
-        if (Input.GetMouseButton(0) && canFire && Firemode >= 2)
+        if (Input.GetMouseButton(0) && canFire && Firemode >= 2 && currentAmmo > 0)
         {
             GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
             s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
@@ -241,9 +241,9 @@ public class PlayerController : MonoBehaviour
                 case "weapon2":
                         weaponID = 2;
                         fireRate = 0.1f;
-                        maxAmmo = 90;
+                        maxAmmo = 120;
                         currentAmmo = 30;
-                        ReloadAmount = 10;
+                        ReloadAmount = 90;
                         Firemode = 0;
                         bulletlifespan = 5;
                         shotspeed = 2000f;

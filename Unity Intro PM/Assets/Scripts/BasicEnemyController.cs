@@ -20,7 +20,7 @@ public class BasicEnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
-        Agent = GetComponent<NavMeshAgent>();    
+        Agent = GetComponent<NavMeshAgent>();
     }
 
 
@@ -30,18 +30,38 @@ public class BasicEnemyController : MonoBehaviour
         Agent.destination = player.transform.position;
 
         if (health <= 0)
-            Destroy(gameObject); 
+            Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "shot")
+        //shoot
+        if (other.gameObject.tag == "shot")
         {
             health -= damagerecived;
+            Destroy(other.gameObject);
+        }
+        if (health >= 0)
+        {
+            Destroy(gameObject);
+            
+        }
+        //punch
+        if (other.gameObject.tag == "Fists")
+        {
+            health -= damagerecived;
+            Destroy(other.gameObject);
+        }
+        if (health >= 0)
+        {
             Destroy(gameObject);
 
         }
-    }
-}
 
+
+    }
+
+}
 
