@@ -10,6 +10,8 @@ TagManager:
   - basic enemy
   - ammoPickup
   - Fists
+  - Ground
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Wall
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 

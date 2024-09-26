@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    private Array Weapons;
+
     private Rigidbody myRB;
     Camera playerCam;
 
@@ -34,9 +37,9 @@ public class PlayerController : MonoBehaviour
     public float bulletlifespan = 0;
     public float fistslifespan = 0;
     public float bulletraylength = 1f;
-   
-    
 
+
+   
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -62,6 +65,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+
         gameObject.layer = LayerMask.NameToLayer("Wall");
 
         myRB = GetComponent<Rigidbody>();
@@ -114,8 +119,13 @@ public class PlayerController : MonoBehaviour
             canFire = false;
             StartCoroutine("cooldownFire");
         }
-        //weaponequipcheck
-        
+       
+
+
+
+
+
+
 
         if (Input.GetKeyDown(KeyCode.R)) 
         {
@@ -291,5 +301,5 @@ public class PlayerController : MonoBehaviour
     }
 
     
-
+  
 }

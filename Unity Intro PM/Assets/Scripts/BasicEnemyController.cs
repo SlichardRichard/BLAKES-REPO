@@ -10,8 +10,8 @@ public class BasicEnemyController : MonoBehaviour
     public NavMeshAgent Agent;
 
     [Header("enemyStats")]
-    public int health = 3;
-    public int maxHealth = 3;
+    public int health = 6;
+    public int maxHealth = 9;
     public int damagegiven = 1;
     public int damagerecived = 1;
     public float pushBackForce = 10000;
@@ -41,9 +41,9 @@ public class BasicEnemyController : MonoBehaviour
         if (other.gameObject.tag == "shot")
         {
             health -= damagerecived;
-            Destroy(other.gameObject);
+
         }
-        if (health >= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
             
@@ -52,12 +52,6 @@ public class BasicEnemyController : MonoBehaviour
         if (other.gameObject.tag == "Fists")
         {
             health -= damagerecived;
-            Destroy(other.gameObject);
-        }
-        if (health >= 0)
-        {
-            Destroy(gameObject);
-
         }
 
 
