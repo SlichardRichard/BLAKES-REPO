@@ -199,38 +199,7 @@ public class PlayerController : MonoBehaviour
             weapon.gameObject.transform.SetPositionAndRotation(Weaponslot.position, Weaponslot.rotation);
             weapon.gameObject.transform.SetParent(Weaponslot);
        
-            /*switch(other.gameObject.name) 
-            {
-                default:
-                    weaponID = 0;
-                    fireRate = 0.1f;
-                    fistslifespan = 0.3f;
-                    break;
 
-                case "weapon1":
-                        weaponID = 1;
-                        fireRate = 0.5f;
-                        maxAmmo = 60;
-                        currentAmmo = 6;
-                        ReloadAmount = 20;
-                        Firemode= 0;
-                        bulletlifespan = 5;
-                        shotspeed = 1000f;
-                        Firemode = 1;
-                    break;
-                
-                case "weapon2":
-                        weaponID = 2;
-                        fireRate = 0.1f;
-                        maxAmmo = 120;
-                        currentAmmo = 30;
-                        ReloadAmount = 90;
-                        Firemode = 0;
-                        bulletlifespan = 5;
-                        shotspeed = 2000f;
-                        Firemode = 2;
-                    break;
-            }      */  
         }
         
     }

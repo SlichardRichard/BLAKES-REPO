@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fists : Weapon
 {
-    public float fistslifespan = 0;
+    public float fistslifespan = 1;
     // Start is called before the first frame update
     void Start()
     {
