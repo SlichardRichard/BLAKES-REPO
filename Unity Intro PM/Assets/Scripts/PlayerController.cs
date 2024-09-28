@@ -2,16 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour
 {
-    private Array Weapons;
+    public static PlayerController instance;
+    [NonSerialized]public List<Weapon> weapons = new List<Weapon>();
+    public int heldIndex { get => _heldIndex; set
+        {
+            _heldIndex = value;
+            RefreshWeapons();
+        } }
+    private int _heldIndex;
+    public GameObject fists;
+    public Weapon currentWeapon { get => weapons[heldIndex]; }
 
-    private Rigidbody myRB;
-    Camera playerCam;
+
+    [NonSerialized]public Rigidbody myRB;
+    [NonSerialized]public Camera playerCam;
 
     Vector2 camRotation;
     public Transform Weaponslot;
@@ -22,24 +31,7 @@ public class PlayerController : MonoBehaviour
     public int Health = 5;
     public int HealthRestore = 1;
     LayerMask layerMask;
-
-    [Header("weapon Stats")]
-    public GameObject shot;
-    public GameObject fists;
-    public float shotspeed = 0f;
     public bool canFire = true;
-    public int weaponID = 0;
-    public float fireRate = 0;
-    public float maxAmmo = 0;
-    public float currentAmmo = 0;
-    public float ReloadAmount = 0;
-    public int Firemode = 0;
-    public float bulletlifespan = 0;
-    public float fistslifespan = 0;
-    public float bulletraylength = 1f;
-
-
-   
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -62,6 +54,18 @@ public class PlayerController : MonoBehaviour
     public float Ysensetivity = 2.0f;
     public float CamRotationLimit = 90;
 
+    private void Awake()
+    {
+        instance = this;
+
+        // adds a fist
+        GameObject fistObject = new GameObject();
+        fistObject.transform.parent = this.transform;
+        fistObject.transform.SetPositionAndRotation(Weaponslot.position, Weaponslot.rotation);
+        fistObject.transform.SetParent(Weaponslot);
+        fistObject.AddComponent(typeof(Fists));
+        weapons.Add(fistObject.GetComponent<Fists>());
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -88,51 +92,6 @@ public class PlayerController : MonoBehaviour
 
         playerCam.transform.localRotation = Quaternion.AngleAxis(camRotation.y, Vector3.left);
         transform.localRotation = Quaternion.AngleAxis(camRotation.x, Vector3.up);
-        //fists
-        if (Input.GetMouseButtonDown(0) && canFire && weaponID <= 0)
-        {
-           fists.SetActive(true);
-            StartCoroutine("cooldownFire");
-
-        }
-        //semiauto fire
-        if (Input.GetMouseButtonDown(0) && canFire && Firemode >= 1 && currentAmmo > 0) 
-        {
-            GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
-            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
-            currentAmmo--;
-            Destroy(s,bulletlifespan);
-    
-            canFire= false;
-            StartCoroutine("cooldownFire");
-            
-        }
-        //autofire
-        if (Input.GetMouseButton(0) && canFire && Firemode >= 2 && currentAmmo > 0)
-        {
-            GameObject s = Instantiate(shot, Weaponslot.position, Weaponslot.rotation);
-            s.GetComponent<Rigidbody>().AddForce(playerCam.transform.forward * shotspeed);
-            currentAmmo--;
-            Destroy(s, bulletlifespan);
-            
-
-            canFire = false;
-            StartCoroutine("cooldownFire");
-        }
-       
-
-
-
-
-
-
-
-        if (Input.GetKeyDown(KeyCode.R)) 
-        {
-            reloadClip();
-        }
-        
-
 
         // Sprinting
         if(sprintMode)
@@ -185,8 +144,17 @@ public class PlayerController : MonoBehaviour
             temp.y = jumpheight;
             
         myRB.velocity = (temp.x * transform.forward) + (temp.z * transform.right) + (temp.y * transform.up);
-    
-        
+
+        // weapons
+        for (int i = 0; i < weapons.Count; i++)
+            if (Input.GetKeyDown((i + 1).ToString()))
+            {
+                heldIndex = i;
+                return;
+            }
+
+        currentWeapon.HeldUpdate();
+
     }
 
    //Pickups
@@ -207,28 +175,31 @@ public class PlayerController : MonoBehaviour
 
         }
   
-
-        if ((currentAmmo < maxAmmo) && other.gameObject.tag == "ammoPickup" )
+        if (currentWeapon as Gun != null)
         {
-            currentAmmo += ReloadAmount;
+            Gun gun = currentWeapon as Gun;
 
-            if (currentAmmo > maxAmmo)
-                currentAmmo = maxAmmo;
+            if ((gun.currentAmmo < gun.maxAmmo) && other.gameObject.tag == "ammoPickup")
+            {
+                gun.currentAmmo += gun.ReloadAmount;
+
+                if (gun.currentAmmo > gun.maxAmmo)
+                    gun.currentAmmo = gun.maxAmmo;
 
 
-            Destroy(other.gameObject);
+                Destroy(other.gameObject);
+            }
         }
 
-        if (other.gameObject.tag == "WeaponTag")
+        Weapon weapon = other.GetComponent<Weapon>();
+        if (weapon != null)
         {
-
-
-            other.gameObject.transform.SetPositionAndRotation(Weaponslot.position, Weaponslot.rotation);
-
-
-            other.gameObject.transform.SetParent(Weaponslot);
+            weapons.Add(weapon);
+            heldIndex = weapons.Count - 1;
+            weapon.gameObject.transform.SetPositionAndRotation(Weaponslot.position, Weaponslot.rotation);
+            weapon.gameObject.transform.SetParent(Weaponslot);
        
-            switch(other.gameObject.name) 
+            /*switch(other.gameObject.name) 
             {
                 default:
                     weaponID = 0;
@@ -259,47 +230,23 @@ public class PlayerController : MonoBehaviour
                         shotspeed = 2000f;
                         Firemode = 2;
                     break;
-            }        
+            }      */  
         }
         
-
-
     }
-    public void reloadClip()
-    {
-
-        
-        if (currentAmmo >= maxAmmo)
-            return;
-
-        else
-        {
-            float reloadCount = maxAmmo - currentAmmo;
-
-            if (currentAmmo < reloadCount)
-            {
-                currentAmmo += currentAmmo;
-                currentAmmo = 0;
-                return;
-            }
-
-            else
-            {
-                currentAmmo += reloadCount;
-                currentAmmo -= reloadCount;
-                return;
-            }
-        }
-
-    }
-
     IEnumerator cooldownFire()
     {
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(currentWeapon.fireRate);
         canFire = true;
-        fists.SetActive(false);    
     }
-
-    
-  
+    void RefreshWeapons()
+    {
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (i == heldIndex)
+                weapons[i].gameObject.SetActive(true);
+            else
+                weapons[i].gameObject.SetActive(false);
+        }
+    }
 }
