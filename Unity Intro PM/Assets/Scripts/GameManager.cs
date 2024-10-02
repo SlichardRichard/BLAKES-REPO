@@ -14,13 +14,13 @@ public class GameManager : MonoBehaviour
     public Image healthBar;
     public TextMeshProUGUI AmmoCounter;
     public PlayerController playerData;
-    //public GameObject GunData;
+  
 
     // Start is called before the first frame update
     void Start()
     {
         playerData = GameObject.Find("Player").GetComponent<PlayerController>();
-        //GunData = GameObject.Find("weapon1").GetComponent<GameObject>();
+        
     }
 
 
@@ -28,28 +28,35 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);
-        //AmmoCounter.text = "Ammo" + GunData.
-
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if(SceneManager.GetActiveScene().buildIndex > 0)
         {
-            if (!isPaused)
+
+        
+            healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);           
+            AmmoCounter.text = "Ammo: " + playerData.currentWeapon.GetComponent<Gun>().currentAmmo;
+
+
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                pauseMenu.SetActive(true);
+                if (!isPaused)
+                {
+                    pauseMenu.SetActive(true);
 
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                 
-                Time.timeScale = 0;
+                    Time.timeScale = 0;
 
-                isPaused = true;
+                    isPaused = true;
 
+                }
+
+                else
+                    Resume();
             }
-
-            else
-                Resume();
+        
         }
+    
     }
 
     public void Resume()
@@ -71,11 +78,13 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int sceneID)
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(sceneID);
     }
 
     public void RestartLevel()
     {
+        Time.timeScale = 1;
         LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
