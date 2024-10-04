@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         {
 
         
-            healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);           
+            healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);
             AmmoCounter.text = "Ammo: " + playerData.currentWeapon.GetComponent<Gun>().currentAmmo;
 
 
