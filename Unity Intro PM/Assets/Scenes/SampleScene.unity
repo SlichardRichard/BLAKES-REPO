@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 187081589}
   - component: {fileID: 187081588}
   - component: {fileID: 187081587}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -979,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 615275001}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WalkableSurfaces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1993,7 +1993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1425677065}
   - component: {fileID: 1425677066}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2501,7 +2501,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879658679}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -11.26}
   m_LocalScale: {x: 1, y: 2, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2522,21 +2522,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 219949948}
   Agent: {fileID: 1879658680}
-  playerRef: {fileID: 219949942}
+  playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   canSeePlayer: 0
   health: 6
   maxHealth: 9
   damagegiven: 1
   damagerecived: 1
   pushBackForce: 10000
-  radius: 0
-  angle: 0
+  radius: 5
+  angle: 180
 --- !u!1001 &1913538539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2548,29 +2548,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FistHitbox
       objectReference: {fileID: 0}
-    - target: {fileID: 4647485076387583290, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4647485076387583290, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
-      propertyPath: m_TagString
-      value: Fists
-      objectReference: {fileID: 0}
     - target: {fileID: 8821006819429680767, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8821006819429680767, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8821006819429680767, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8821006819429680767, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8821006819429680767, guid: f00c0fb34a5585d449bef7fcba255579, type: 3}
       propertyPath: m_LocalPosition.x
