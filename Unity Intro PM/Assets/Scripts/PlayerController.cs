@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
             Vector3 temp = myRB.velocity;
 
-            //
+            //movement
             float verticalMove = Input.GetAxisRaw("Vertical");
             float horizontalMove = Input.GetAxisRaw("Horizontal");
 
