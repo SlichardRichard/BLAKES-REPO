@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public Image healthBar;
     public TextMeshProUGUI AmmoCounter;
     public PlayerController playerData;
-  
+    
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +33,13 @@ public class GameManager : MonoBehaviour
 
         
             healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);
-            AmmoCounter.text = "Ammo: " + playerData.currentWeapon.GetComponent<Gun>().currentAmmo;
-
+            
+            
+            if(GameObject.Find("WeaponSlot").GetComponentInChildren<Gun>() != null) 
+            {
+                AmmoCounter.text = "Ammo: " + playerData.currentWeapon.GetComponent<Gun>().currentAmmo;
+            }
+            
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
