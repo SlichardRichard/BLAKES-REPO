@@ -166,20 +166,25 @@ public class PlayerController : MonoBehaviour
    //Pickups
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.gameObject.tag == "exitDoor")
+            gameManager.LoadLevel(1);
+
+
+        
+        if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
         {
-            if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
-            {
-                Health += HealthRestore;
+            Health += HealthRestore;
 
-                if (Health > maxHealth)
-                    Health = maxHealth;
+            if (Health > maxHealth)
+                Health = maxHealth;
 
 
-                Destroy(other.gameObject);
-            }
-
-
+            Destroy(other.gameObject);
         }
+
+
+        
   
         if (currentWeapon as Gun != null)
         {
