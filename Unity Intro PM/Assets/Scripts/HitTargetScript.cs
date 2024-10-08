@@ -33,6 +33,7 @@ public class HitTargetScript : MonoBehaviour
         {
             health -= damagerecived;
 
+            Destroy(other.gameObject);
         }
         if (health <= 0)
         {

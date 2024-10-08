@@ -288,7 +288,7 @@ MonoBehaviour:
   speed: 5
   sprintMultiplier: 2.5
   jumpheight: 5
-  GrounddetectDistance: 1
+  GrounddetectDistance: 1.5
   sprintMode: 0
   TimeSprint: 0
   STARTacceltime: 5
