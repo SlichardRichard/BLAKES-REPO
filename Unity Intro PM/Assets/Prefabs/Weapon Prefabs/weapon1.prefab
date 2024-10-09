@@ -115,7 +115,7 @@ MonoBehaviour:
   shot: {fileID: 427091640126257689, guid: 09924f5f563faf247b516200c9a4db54, type: 3}
   shotspeed: 1000
   maxAmmo: 60
-  currentAmmo: 6
+  currentAmmo: 10
   ReloadAmount: 20
   Firemode: 1
   bulletlifespan: 5
