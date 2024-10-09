@@ -19932,10 +19932,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1497803605696018415, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1497803605864553889, guid: f37b70f166553be429780e21833bfc40, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -20036,26 +20032,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1757035177}
-    - target: {fileID: 1497803606885949230, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -380
-      objectReference: {fileID: 0}
-    - target: {fileID: 1497803606944374847, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1497803606944374847, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1497803607477854521, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1497803607477854521, guid: f37b70f166553be429780e21833bfc40, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 90
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f37b70f166553be429780e21833bfc40, type: 3}
 --- !u!1 &1778465204
