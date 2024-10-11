@@ -13,6 +13,8 @@ TagManager:
   - Ground
   - Wall
   - exitDoor
+  - Key
+  - KeyDoor
   layers:
   - Default
   - TransparentFX

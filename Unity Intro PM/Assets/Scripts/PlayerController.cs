@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public int HealthRestore = 1;
     LayerMask layerMask;
     public bool canFire = true;
+    public bool HasKey = false;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -170,8 +171,12 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "exitDoor")
             gameManager.LoadLevel(1);
 
+        if (other.gameObject.tag == "Key")
+        { 
+            HasKey = true;
+            Destroy(other.gameObject);
+        }
 
-        
         if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
         {
             Health += HealthRestore;
