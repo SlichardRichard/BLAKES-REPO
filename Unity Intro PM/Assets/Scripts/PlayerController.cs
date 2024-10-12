@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public int HealthRestore = 1;
     LayerMask layerMask;
     public bool canFire = true;
+    public bool HasKey = false;
 
     [Header("Movement Settings")]
     public float speed = 10.0f;
@@ -110,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
             Vector3 temp = myRB.velocity;
 
-            //
+            //movement
             float verticalMove = Input.GetAxisRaw("Vertical");
             float horizontalMove = Input.GetAxisRaw("Horizontal");
 
@@ -166,20 +167,29 @@ public class PlayerController : MonoBehaviour
    //Pickups
     private void OnTriggerEnter(Collider other)
     {
-        {
-            if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
-            {
-                Health += HealthRestore;
 
-                if (Health > maxHealth)
-                    Health = maxHealth;
+        if (other.gameObject.tag == "exitDoor")
+            gameManager.LoadLevel(1);
 
-
-                Destroy(other.gameObject);
-            }
-
-
+        if (other.gameObject.tag == "Key")
+        { 
+            HasKey = true;
+            Destroy(other.gameObject);
         }
+
+        if ((Health < maxHealth) && other.gameObject.tag == "HealthPickup")
+        {
+            Health += HealthRestore;
+
+            if (Health > maxHealth)
+                Health = maxHealth;
+
+
+            Destroy(other.gameObject);
+        }
+
+
+        
   
         if (currentWeapon as Gun != null)
         {

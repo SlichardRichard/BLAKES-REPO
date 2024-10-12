@@ -12,6 +12,9 @@ TagManager:
   - Fists
   - Ground
   - Wall
+  - exitDoor
+  - Key
+  - KeyDoor
   layers:
   - Default
   - TransparentFX

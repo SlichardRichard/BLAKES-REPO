@@ -10,17 +10,18 @@ public class GameManager : MonoBehaviour
 {
     public bool isPaused = false;
 
+    
     public GameObject pauseMenu;
     public Image healthBar;
     public TextMeshProUGUI AmmoCounter;
     public PlayerController playerData;
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
         playerData = GameObject.Find("Player").GetComponent<PlayerController>();
-        
+
     }
 
 
@@ -28,18 +29,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().buildIndex > 0)
+        if (SceneManager.GetActiveScene().buildIndex > 0)
         {
 
-        
+
             healthBar.fillAmount = Mathf.Clamp((float)playerData.Health / (float)playerData.maxHealth, 0, 1);
-            
-            
-            if(GameObject.Find("WeaponSlot").GetComponentInChildren<Gun>() != null) 
+
+
+            if (GameObject.Find("WeaponSlot").GetComponentInChildren<Gun>() != null)
             {
                 AmmoCounter.text = "Ammo: " + playerData.currentWeapon.GetComponent<Gun>().currentAmmo;
             }
-            
+
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
 
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
-                
+
                     Time.timeScale = 0;
 
                     isPaused = true;
@@ -59,9 +60,9 @@ public class GameManager : MonoBehaviour
                 else
                     Resume();
             }
-        
+
         }
-    
+
     }
 
     public void Resume()
@@ -93,9 +94,10 @@ public class GameManager : MonoBehaviour
         LoadLevel(SceneManager.GetActiveScene().buildIndex);
     }
 
-
-
-
+    public IEnumerator TargetElim()
+        {
+            yield return new WaitForSeconds(300);
+        }
 
 
 }
