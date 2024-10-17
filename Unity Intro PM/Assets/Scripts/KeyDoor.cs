@@ -27,6 +27,9 @@ public class KeyDoor : MonoBehaviour
             Destroy(gameObject);
             playerData.HasKey = false;
         }
+    
+    
+        
     }
-
+    
 }
