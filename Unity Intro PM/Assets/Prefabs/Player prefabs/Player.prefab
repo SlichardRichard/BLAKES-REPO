@@ -141,8 +141,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5955931932526682401}
-  m_LocalRotation: {x: 0.70710653, y: -0, z: -0, w: 0.70710707}
-  m_LocalPosition: {x: 0, y: -0.54999995, z: 0.5}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.3, y: -0.54999995, z: 0.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -263,9 +263,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5955931932678741838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +285,7 @@ MonoBehaviour:
   Health: 4
   HealthRestore: 1
   canFire: 1
+  HasKey: 0
   speed: 5
   sprintMultiplier: 2.5
   jumpheight: 5
