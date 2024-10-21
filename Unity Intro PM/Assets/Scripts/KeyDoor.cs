@@ -20,9 +20,9 @@ public class KeyDoor : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void Opendoor()
     {
-        if (other.gameObject.tag == "Player" && playerData.HasKey == true)
+        if (playerData.HasKey == true && Input.GetKeyDown(KeyCode.E))
         {
             Destroy(gameObject);
             playerData.HasKey = false;

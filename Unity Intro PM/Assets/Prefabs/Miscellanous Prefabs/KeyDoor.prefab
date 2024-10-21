@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6443678420173000502}
   - component: {fileID: 3168911488450474816}
   - component: {fileID: 8837621515857323225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KeyDoor
-  m_TagString: Untagged
+  m_TagString: KeyDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

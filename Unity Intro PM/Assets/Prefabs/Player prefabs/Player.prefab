@@ -280,19 +280,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fists: {fileID: 1358001883992057571}
   Weaponslot: {fileID: 5955931932526682404}
+  Keydoor:
+    serializedVersion: 2
+    m_Bits: 128
   gameManager: {fileID: 0}
   maxHealth: 5
   Health: 4
   HealthRestore: 1
   canFire: 1
   HasKey: 0
-  speed: 5
-  sprintMultiplier: 2.5
+  speed: 8
+  sprintMultiplier: 1.5
   jumpheight: 5
   GrounddetectDistance: 1.5
   sprintMode: 0
   TimeSprint: 0
-  STARTacceltime: 5
+  STARTacceltime: 8
   ENDacceltime: 10
   sprintToggleOption: 0
   mouseSensetivity: 1

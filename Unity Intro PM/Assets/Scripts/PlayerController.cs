@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 camRotation;
     public Transform Weaponslot;
-    
+    public LayerMask Keydoor;
 
     [Header("Player Stats")]
     public GameManager gameManager;
@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour
     public bool HasKey = false;
 
     [Header("Movement Settings")]
-    public float speed = 10.0f;
-    public float sprintMultiplier = 2.5f;
+    public float speed = 8.0f;
+    public float sprintMultiplier = 1.5f;
     public float jumpheight = 5.0f;
     public float GrounddetectDistance = 1.0f;
     public bool sprintMode = false;
@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
     public float TimeSprint;
 
     [Header("Sprint Accelaration")]
-    public float STARTacceltime = 10;
-    public float ENDacceltime = 15;
+    public float STARTacceltime = 8;
+    public float ENDacceltime = 10;
 
 
     [Header("User Settings")]
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 TimeSprint = 0;
-                speed = 10;
+                speed = 8;
             }
 
             Vector3 temp = myRB.velocity;
@@ -162,6 +162,17 @@ public class PlayerController : MonoBehaviour
             currentWeapon.HeldUpdate();
         }
 
+        if(Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out RaycastHit hit, 5f, Keydoor))
+        {
+            hit.collider.gameObject.GetComponent<KeyDoor>().Opendoor();
+        }
+      
+        
+        Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward);
+    
+    
+    
+    
     
     }
 
