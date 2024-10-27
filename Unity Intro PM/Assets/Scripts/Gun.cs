@@ -12,12 +12,13 @@ public class Gun : Weapon
     public float ReloadAmount = 0;
     public int Firemode = 0;
     public float bulletlifespan = 0;
-    
+    public PlayerController playerData;
+
     public float bulletraylength = 1f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerData = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -47,10 +48,21 @@ public class Gun : Weapon
             player.canFire = false;
             player.StartCoroutine("cooldownFire");
         }
+        //HitscanFire
+        /*
+        if (Input.GetMouseButton(0) && player.canFire && Firemode >= 3 && currentAmmo > 0)
+        {
+           Physics.Raycast(weaponslot.transform.position, weaponslot.transform.forward, out RaycastHit hit, 5f);
+
+
+        }
+       */
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
             reloadClip();
         }
+    
     }
     public void reloadClip()
     {
