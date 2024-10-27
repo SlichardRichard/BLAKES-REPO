@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : MonoBehaviour
+public class LookTowardsPlayer : MonoBehaviour
 {
-    
+
     public Transform player;
     public Rigidbody rb;
     // Start is called before the first frame update

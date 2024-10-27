@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8577521740759081399}
   - component: {fileID: 8179066096293640040}
   - component: {fileID: -3631088604991691536}
-  - component: {fileID: 3966194036279484357}
+  - component: {fileID: 6760055877254123693}
   - component: {fileID: -7853315377822136680}
   m_Layer: 0
   m_Name: shot
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35330e0461068846b25e6ec0e3542c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3966194036279484357
+--- !u!114 &6760055877254123693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 427091640126257689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de677bbb41ccd0f448c7c48784b01b21, type: 3}
+  m_Script: {fileID: 11500000, guid: c83765ebd70f685489ea0bf5ca38b55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
