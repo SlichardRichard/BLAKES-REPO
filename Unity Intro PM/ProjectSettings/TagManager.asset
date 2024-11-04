@@ -10,11 +10,11 @@ TagManager:
   - basic enemy
   - ammoPickup
   - Fists
-  - Ground
   - Wall
   - exitDoor
   - Key
   - KeyDoor
+  - LevelGeo
   layers:
   - Default
   - TransparentFX
