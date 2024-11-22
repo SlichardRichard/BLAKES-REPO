@@ -13,11 +13,13 @@ public class Gun : Weapon
     public int Firemode = 0;
     public float bulletlifespan = 0;
     public PlayerController playerData;
+    public Transform GunspritePlace;
 
     public float bulletraylength = 1f;
     // Start is called before the first frame update
     void Start()
     {
+        GunspritePlace = GameObject.find("Weaponsprite");
         playerData = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -39,7 +41,7 @@ public class Gun : Weapon
         //autofire
         if (Input.GetMouseButton(0) && player.canFire && Firemode >= 2 && currentAmmo > 0)
         {
-            GameObject s = GameObject.Instantiate(shot, player.Weaponslot.position, player.Weaponslot.rotation);
+            GameObject s = GameObject.Instantiate(shot, player.Weaponsprite.position, player.Weaponsprite.rotation);
             s.GetComponent<Rigidbody>().AddForce(player.playerCam.transform.forward * shotspeed);
             currentAmmo--;
             GameObject.Destroy(s, bulletlifespan);
